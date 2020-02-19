@@ -8,19 +8,18 @@ import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.api.Response
 import com.apollographql.apollo.coroutines.toFlow
 import com.apollographql.apollo.exception.ApolloException
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.cancelChildren
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 
 class MyViewModel: ViewModel() {
 
     val repo = Repo()
 
+    val scope = CoroutineScope(Dispatchers.Main)
+
     fun getData() {
-        viewModelScope.launch {
+        scope.launch {
             repo.getData()
                 .collect {
                     println(it)
@@ -29,7 +28,7 @@ class MyViewModel: ViewModel() {
     }
 
     fun cancel() {
-        viewModelScope.cancel()
+        scope.cancel()
     }
 
 }
