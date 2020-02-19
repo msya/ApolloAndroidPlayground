@@ -1,0 +1,1 @@
+query Test{lend{loans (filters:{status:fundraising} sortBy:newest){values{id name loanAmount}}}}
