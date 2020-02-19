@@ -17,11 +17,10 @@ import kotlinx.coroutines.launch
 
 class MyViewModel: ViewModel() {
 
-    val job = Job(viewModelScope.coroutineContext[Job])
     val repo = Repo()
 
     fun getData() {
-        viewModelScope.launch(job) {
+        viewModelScope.launch {
             repo.getData()
                 .collect {
                     println(it)
@@ -30,7 +29,7 @@ class MyViewModel: ViewModel() {
     }
 
     fun cancel() {
-        job.cancelChildren()
+        viewModelScope.cancel()
     }
 
 }
